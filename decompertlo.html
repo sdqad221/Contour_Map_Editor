@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Завантаження країн та точок</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/style1.css">
+    <style>
+
+    </style>
+</head>
+<body>
+
+
+    <div class="control-panel">
+
+        <div>
+            <label for="json-upload">Завантажити карту:</label>
+            <input type="file" id="json-upload" accept=".json" />
+        </div>
+        <div>
+            <label for="map-layer">Шар карти:</label>
+            <select id="map-layer">
+                <option value="osm">OpenStreetMap</option>
+                <option value="satellite">Спутник</option>
+                <option value="terrain">Рельєф</option>
+            </select>
+        </div>
+        <div id="fio-display" style="background: rgba(255, 255, 255, 0.7); padding: 5px; border-radius: 5px; font-size: 16px; z-index: 1000;">
+            Назва: невідома
+        </div>
+    
+
+        <div style="margin-top: 20px;">
+            <button onclick="window.location.href='index.html'" style="padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
+                Повернутись на головну
+            </button>
+        </div>
+    </div>
+    
+
+    <!-- Карта -->
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="js/decomplator.js">
+
+    </script>
+
+</body>
+</html>

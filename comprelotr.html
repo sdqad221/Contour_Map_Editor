@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивная карта с GUI</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css" />
+<link rel="stylesheet" href="css/style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body>
+    <div id="map">
+        
+    </div>
+    <div class="body">
+       
+        
+</div>
+    <div id="controls">
+        <div class="control-group">
+            <label for="country-select">Оберіть країну:</label>
+            <select id="country-select">
+                <option value="">Оберіть країну</option>
+           
+            </select>
+        </div>
+    
+        <div class="control-group">
+            <label for="point-description">Опис точки:</label>
+            <input type="text" id="point-description" placeholder="Опис точки" />
+            <label for="point-image">Зображення для точки:</label>
+            <input type="file" id="point-image" accept="image/*" />
+            <button id="add-point-btn">Додати точку</button>
+        </div>
+    
+        <div class="control-group">
+            <label for="map-layer">Тип карти:</label>
+            <select id="map-layer">
+                <option value="osm">OpenStreetMap</option>
+                <option value="satellite">Супутник</option>
+                <option value="terrain">Рельеф</option>
+               
+            </select>
+            
+            
+          
+            
+        </div>
+    
+        <div class="control-group">
+            <button id="center-map-btn">Центрувати карту</button>
+            <button id="clear-points-btn">Видалити всі точки</button>
+            <button id="reset-btn">Скинути все</button>
+        </div>
+
+        <div class="control-group">
+            <label for="show-borders">Показати межі країн:</label>
+            <input type="checkbox" id="show-borders" />
+        </div>
+    
+        <div id="country-color-picker" class="control-group" style="display: none;">
+            <label for="country-color">Оберіть колір для країни:</label>
+            <input type="color" id="country-color" />
+        </div>
+    
+
+        <div id="selected-country-info" class="control-group" style="display: none;">
+            <p>Оберрана країна: <span id="selected-country-name"></span></p>
+            <p>Колір: <span id="selected-country-color"></span></p>
+            <button id="change-country-color-btn">Змінити колір</button>
+        </div>
+    
+        <div id="point-list" class="point-list">
+            <h4>Список точок:</h4>
+
+        </div>
+    </div>
+    
+
+    <div id="point-info-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>Інформація про точку</h3>
+            <p id="point-description-info">Опис: <span></span></p>
+            <p id="point-coordinates-info">Координати: <span></span></p>
+            <div id="point-image-info" style="display: none;">
+                <p>Зображення:</p>
+                <img src="" alt="Зображення точки" style="width: 100%; max-width: 300px;" />
+            </div>
+        </div>
+    </div>
+    
+<button id="save-btn">Зберегети карту</button>
+
+<div style="margin-top: 20px;">
+    <button onclick="window.location.href='index.html'" style="padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
+        Повернутись на головну
+    </button>
+</div>
+</div>
+
+    
+
+    <script src="js/comptor.js">
+
+    </script>
+</body>
+</html>
