@@ -1,0 +1,83 @@
+
+ body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+#map {
+    height: 100vh;
+    width: 100%;
+}
+
+
+.control-panel {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.control-panel label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.control-panel input[type="file"],
+.control-panel select {
+    font-size: 14px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.control-panel input[type="file"] {
+    background-color: #f9f9f9;
+}
+
+.control-panel select {
+    background-color: #fff;
+}
+
+.control-panel input:hover,
+.control-panel select:hover {
+    background-color: #f0f0f0;
+}
+
+.control-panel button {
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.control-panel button:hover {
+    background-color: #0056b3;
+}
+
+
+.popup-img {
+    width: 100px;
+    height: auto;
+    margin-top: 10px;
+}
+
+
+.leaflet-tooltip {
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 5px;
+    border-radius: 5px;
+}
