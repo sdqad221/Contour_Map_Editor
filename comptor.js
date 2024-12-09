@@ -64,8 +64,8 @@ document.getElementById('map-layer').addEventListener('change', (e) => {
 
 
 let geojsonLayer, bordersLayer;
-let countriesData = {}; // Объект для хранения данных стран с их цветами
-let selectedLayer = null; // Переменная для хранения выбранной страны
+let countriesData = {}; 
+let selectedLayer = null; 
 
 fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
     .then(res => res.json())
@@ -74,7 +74,7 @@ fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/coun
         geojsonLayer = L.geoJSON(data, {
             style: (feature) => {
                 const countryName = feature.properties.ADMIN;
-                const countryColor = countriesData[countryName] || "#BABABA"; // Цвет по умолчанию (серый)
+                const countryColor = countriesData[countryName] || "#BABABA"; 
                 return {
                     color: countryColor,
                     weight: 1,
@@ -92,7 +92,7 @@ fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/coun
 
       
         bordersLayer = geojsonLayer;
-        bordersLayer.addTo(map); // Добавляем слой на карту
+        bordersLayer.addTo(map); 
 
        
         const countrySelect = document.getElementById('country-select');
@@ -104,7 +104,7 @@ fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/coun
             countrySelect.appendChild(option);
 
            
-            countriesData[countryName] = "#BABABA"; // Устанавливаем дефолтный серый цвет
+            countriesData[countryName] = "#BABABA"; 
         });
 
         countrySelect.addEventListener('change', (e) => {
@@ -115,9 +115,9 @@ fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/coun
         const showBordersCheckbox = document.getElementById('show-borders');
         showBordersCheckbox.addEventListener('change', (e) => {
             if (e.target.checked) {
-                bordersLayer.addTo(map); // Добавить слой границ
+                bordersLayer.addTo(map);
             } else {
-                bordersLayer.removeFrom(map); // Убрать слой границ
+                bordersLayer.removeFrom(map); 
             }
         });
     });
@@ -185,7 +185,7 @@ function updatePointList() {
     markers.forEach((markerData, index) => {
         const div = document.createElement('div');
         const { marker, description, imageUrl } = markerData;
-        const latLng = marker.getLatLng(); // Получаем координаты маркера
+        const latLng = marker.getLatLng(); 
 
         div.innerHTML = `
             <span>${description || 'Без опису'} [${latLng.lat.toFixed(4)}, ${latLng.lng.toFixed(4)}]</span>
@@ -220,7 +220,7 @@ function editPoint(index) {
             const newDescription = document.getElementById('swal-description').value;
             const imageFile = document.getElementById('swal-image-file').files[0];
 
-            let newImage = imageUrl; // Если изображения не было выбрано, сохраняем текущее
+            let newImage = imageUrl;
 
            
             if (imageFile) {
@@ -238,7 +238,7 @@ function editPoint(index) {
     });
 }
 
-// Функция для обновления маркера
+
 function updateMarker(index, newDescription, newImage) {
  
     markers[index].description = newDescription;
@@ -252,7 +252,7 @@ function updateMarker(index, newDescription, newImage) {
     }
 
     marker.setPopupContent(popupContent);
-    updatePointList(); // Перезапускаем обновление списка точек
+    updatePointList();
 }
 
 
@@ -329,7 +329,7 @@ resetBtn.addEventListener('click', () => {
 
 
 document.getElementById('save-btn').addEventListener('click', () => {
-    // Показуємо вікно для введення ФІО
+ 
     Swal.fire({
         title: 'Введіть назву карти',
         input: 'text',
@@ -345,7 +345,7 @@ document.getElementById('save-btn').addEventListener('click', () => {
         }
     }).then(result => {
         if (result.isConfirmed && result.value) {
-            const fio = result.value; // Отримуємо введене ФІО
+            const fio = result.value;
 
   
             const country = document.getElementById('country-select').value;
@@ -363,9 +363,9 @@ document.getElementById('save-btn').addEventListener('click', () => {
 
          
             const mapData = {
-                fio: fio, // Додаємо ФІО
+                fio: fio,
                 selectedCountry: country,
-                points, // Збереження маркерів
+                points,
                 countries: countriesInfo, 
                 layers: {
                     osm: layers.osm._map ? 'osm' : null,
@@ -374,7 +374,7 @@ document.getElementById('save-btn').addEventListener('click', () => {
                 }
             };
 
-            const dataStr = JSON.stringify(mapData, null, 2); // Перетворюємо дані в JSON рядок з відступами
+            const dataStr = JSON.stringify(mapData, null, 2); 
 
          
             const filename = `map-data-${fio.replace(/\s+/g, '_')}.json`;
