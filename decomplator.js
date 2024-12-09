@@ -1,5 +1,5 @@
   
-        const map = L.map('map').setView([20, 0], 2); // Встановлюємо початковий центр та масштаб
+        const map = L.map('map').setView([20, 0], 2);
 
   
         const layers = {
@@ -48,8 +48,8 @@
             changeMapLayer(event.target.value);
         });
         
-        let countryLayer = null; // Шар для всіх країн
-        let pointsLayer = null;  // Шар для точок
+        let countryLayer = null; 
+        let pointsLayer = null; 
         
        
         let countriesGeoJSON = null;
@@ -93,7 +93,7 @@
              
                 countryLayer = L.geoJSON(countriesGeoJSON, {
                     style: function(feature) {
-                        const countryColor = countryColorMap[feature.properties.ADMIN] || "#BABABA"; // Якщо колір не заданий, застосовуємо сірий
+                        const countryColor = countryColorMap[feature.properties.ADMIN] || "#BABABA"; 
                         return {
                             color: countryColor,
                             weight: 2,
