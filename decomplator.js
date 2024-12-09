@@ -58,7 +58,7 @@
         fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
             .then(res => res.json())
             .then(data => {
-                countriesGeoJSON = data; // Зберігаємо дані про межі країн
+                countriesGeoJSON = data; 
             })
             .catch(err => {
                 alert('Помилка завантаження меж країн: ' + err.message);
