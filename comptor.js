@@ -7,37 +7,37 @@
 
 
      document.addEventListener('DOMContentLoaded', function() {
-    // Получаем элементы
+
     const textInput = document.getElementById('text-input');
     const textSizeRange = document.getElementById('text-size-range');
     const textOpacityRange = document.getElementById('text-opacity-range');
     const textColorRange = document.getElementById('text-color-range');
 
-    // Инициализируем стили для текста
+   
     textInput.style.fontSize = `${textSizeRange.value}px`;
     textInput.style.opacity = textOpacityRange.value;
     textInput.style.color = textColorRange.value;
 
-    // Обработчик изменения размера текста
+
     textSizeRange.addEventListener('input', function(e) {
         textInput.style.fontSize = `${e.target.value}px`;
     });
 
-    // Обработчик изменения прозрачности текста
+
     textOpacityRange.addEventListener('input', function(e) {
         textInput.style.opacity = e.target.value;
     });
 
-    // Обработчик изменения цвета текста
+ 
     textColorRange.addEventListener('input', function(e) {
         textInput.style.color = e.target.value;
     });
 });
 
-// === Инициализация карты ===
+
 const map = L.map('map').setView([20, 0], 2);
 
-// Слои карты
+
 const layers = {
     osm: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -56,13 +56,13 @@ const layers = {
 
 layers.osm.addTo(map);
 
-// === Переключение слоев карты ===
+
 document.getElementById('map-layer').addEventListener('change', (e) => {
     map.eachLayer(layer => map.removeLayer(layer));
     layers[e.target.value].addTo(map);
 });
 
-// Переменная для слоя границ
+
 let geojsonLayer, bordersLayer;
 let countriesData = {}; // Объект для хранения данных стран с их цветами
 let selectedLayer = null; // Переменная для хранения выбранной страны
@@ -70,7 +70,7 @@ let selectedLayer = null; // Переменная для хранения выб
 fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
     .then(res => res.json())
     .then(data => {
-        // Создание слоя с границами стран
+      
         geojsonLayer = L.geoJSON(data, {
             style: (feature) => {
                 const countryName = feature.properties.ADMIN;
@@ -90,11 +90,11 @@ fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/coun
             }
         });
 
-        // Слой с границами стран (изначально скрыт)
+      
         bordersLayer = geojsonLayer;
         bordersLayer.addTo(map); // Добавляем слой на карту
 
-        // Заполнение списка стран в выпадающем списке
+       
         const countrySelect = document.getElementById('country-select');
         data.features.forEach(feature => {
             const countryName = feature.properties.ADMIN;
@@ -103,7 +103,7 @@ fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/coun
             option.textContent = countryName;
             countrySelect.appendChild(option);
 
-            // Инициализация объекта для хранения цвета для каждой страны
+           
             countriesData[countryName] = "#BABABA"; // Устанавливаем дефолтный серый цвет
         });
 
@@ -111,7 +111,7 @@ fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/coun
             selectCountry(e.target.value);
         });
 
-        // Обработчик для кнопки "Показати межі країн"
+       
         const showBordersCheckbox = document.getElementById('show-borders');
         showBordersCheckbox.addEventListener('change', (e) => {
             if (e.target.checked) {
@@ -122,39 +122,39 @@ fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/coun
         });
     });
 
-// Функция для подсветки выбранной страны при клике
-function highlightCountry(layer, countryName) {
-    if (selectedLayer) geojsonLayer.resetStyle(selectedLayer); // Сбросить стиль предыдущей страны
-    selectedLayer = layer; // Сохраняем текущий слой как выбранный
 
-    // Подсвечиваем выбранную страну
+function highlightCountry(layer, countryName) {
+    if (selectedLayer) geojsonLayer.resetStyle(selectedLayer); 
+    selectedLayer = layer; 
+
+   
     layer.setStyle({
         color: '#ff7800',
         weight: 3,
         fillOpacity: 0.5
     });
 
-    // Устанавливаем выбранную страну в выпадающем списке
+
     document.getElementById('country-select').value = countryName;
 
-    // Отображаем окно выбора цвета
+ 
     const colorPickerDiv = document.getElementById('country-color-picker');
     const colorInput = document.getElementById('country-color');
-    colorInput.value = countriesData[countryName] || "#BABABA"; // Устанавливаем текущий цвет страны
-    colorPickerDiv.style.display = 'block'; // Показываем окно с цветом
+    colorInput.value = countriesData[countryName] || "#BABABA"; 
+    colorPickerDiv.style.display = 'block';
 }
 
-// Функция для обработки выбора страны из выпадающего списка
+
 function selectCountry(countryName) {
     geojsonLayer.eachLayer((layer) => {
         if (layer.feature.properties.ADMIN === countryName) {
-            highlightCountry(layer, countryName); // Подсветить выбранную страну
-            map.fitBounds(layer.getBounds()); // Масштабируем карту, чтобы страна была видна
+            highlightCountry(layer, countryName);
+            map.fitBounds(layer.getBounds()); 
         }
     });
 }
 
-// Обработчик для выбора нового цвета
+
 document.getElementById('country-color').addEventListener('input', (e) => {
     const countryName = document.getElementById('country-select').value;
     const selectedColor = e.target.value;
@@ -169,19 +169,19 @@ document.getElementById('country-color').addEventListener('input', (e) => {
                 fillOpacity: 0.2
             };
         }
-        return {}; // Для других стран не меняем стиль
+        return {};
     });
 });
-// === Управление точками ===
+
 const markers = [];
 const pointList = document.getElementById('point-list');
 const centerMapBtn = document.getElementById('center-map-btn');
 const clearPointsBtn = document.getElementById('clear-points-btn');
 const resetBtn = document.getElementById('reset-btn');
 
-// Обновление списка точек
+
 function updatePointList() {
-    pointList.innerHTML = ''; // Очищаем текущий список точек
+    pointList.innerHTML = ''; 
     markers.forEach((markerData, index) => {
         const div = document.createElement('div');
         const { marker, description, imageUrl } = markerData;
@@ -194,19 +194,19 @@ function updatePointList() {
         `;
         pointList.appendChild(div);
         
-        // Добавляем обработчик для обновления списка точек при перетаскивании маркера
+      
         marker.on('dragend', function() {
-            updatePointList(); // Перезапускаем обновление списка после перемещения
+            updatePointList(); 
         });
     });
 }
 
-// Функция для редактирования точки
+
 function editPoint(index) {
     const markerData = markers[index];
     const { description, imageUrl } = markerData;
 
-    // Всплывающее окно SweetAlert для редактирования
+  
     Swal.fire({
         title: 'Редагувати точку',
         html: `
@@ -222,16 +222,16 @@ function editPoint(index) {
 
             let newImage = imageUrl; // Если изображения не было выбрано, сохраняем текущее
 
-            // Если файл изображения был выбран, читаем его
+           
             if (imageFile) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    newImage = e.target.result; // Получаем результат загрузки файла
-                    updateMarker(index, newDescription, newImage); // Обновляем маркер с изображением
+                    newImage = e.target.result;
+                    updateMarker(index, newDescription, newImage);
                 };
                 reader.readAsDataURL(imageFile);
             } else {
-                // Если файла не было, просто обновляем маркер с описанием
+               
                 updateMarker(index, newDescription, newImage);
             }
         }
@@ -240,11 +240,11 @@ function editPoint(index) {
 
 // Функция для обновления маркера
 function updateMarker(index, newDescription, newImage) {
-    // Обновляем описание и изображение маркера
+ 
     markers[index].description = newDescription;
     markers[index].imageUrl = newImage;
 
-    // Обновляем содержимое всплывающего окна маркера
+
     const marker = markers[index].marker;
     let popupContent = `<p>${newDescription || 'Без опису'}</p>`;
     if (newImage) {
@@ -255,7 +255,7 @@ function updateMarker(index, newDescription, newImage) {
     updatePointList(); // Перезапускаем обновление списка точек
 }
 
-// Удаление точки
+
 function deletePoint(index) {
     map.removeLayer(markers[index].marker);
     markers.splice(index, 1);
@@ -263,7 +263,7 @@ function deletePoint(index) {
 }
 
 
-// Добавление точки
+
 document.getElementById('add-point-btn').addEventListener('click', () => {
     const description = document.getElementById('point-description').value.trim();
     const imageInput = document.getElementById('point-image');
@@ -281,7 +281,7 @@ document.getElementById('add-point-btn').addEventListener('click', () => {
     }
 });
 
-// Додати маркер з зображенням
+
 function addMarker(description, imageUrl) {
     const marker = L.marker(map.getCenter(), { draggable: true }).addTo(map);
     marker.description = description;
@@ -303,7 +303,7 @@ function addMarker(description, imageUrl) {
     document.getElementById('point-image').value = '';
 }
 
-// Центрировать карту на последней добавленной точке
+
 centerMapBtn.addEventListener('click', () => {
     if (markers.length > 0) {
         const lastMarker = markers[markers.length - 1].marker;
@@ -313,21 +313,21 @@ centerMapBtn.addEventListener('click', () => {
     }
 });
 
-// Удалить все точки
+
 clearPointsBtn.addEventListener('click', () => {
     markers.forEach(item => map.removeLayer(item.marker));
     markers.length = 0;
     updatePointList();
 });
 
-// Сбросить всё
+
 resetBtn.addEventListener('click', () => {
     clearPointsBtn.click();
     document.getElementById('country-select').value = '';
     map.setView([20, 0], 2);
 });
 
-// === Збереження даних ===
+
 document.getElementById('save-btn').addEventListener('click', () => {
     // Показуємо вікно для введення ФІО
     Swal.fire({
@@ -347,7 +347,7 @@ document.getElementById('save-btn').addEventListener('click', () => {
         if (result.isConfirmed && result.value) {
             const fio = result.value; // Отримуємо введене ФІО
 
-            // Вибір країни та маркерів
+  
             const country = document.getElementById('country-select').value;
             const points = markers.map(marker => ({
                 lat: marker.marker.getLatLng().lat,
@@ -361,12 +361,12 @@ document.getElementById('save-btn').addEventListener('click', () => {
                 color: countriesData[countryName]
             }));
 
-            // Дані карти, включаючи ФІО, вибрані країни, маркери та кольори
+         
             const mapData = {
                 fio: fio, // Додаємо ФІО
                 selectedCountry: country,
                 points, // Збереження маркерів
-                countries: countriesInfo, // Збереження кольорів країн
+                countries: countriesInfo, 
                 layers: {
                     osm: layers.osm._map ? 'osm' : null,
                     satellite: layers.satellite._map ? 'satellite' : null,
@@ -376,21 +376,21 @@ document.getElementById('save-btn').addEventListener('click', () => {
 
             const dataStr = JSON.stringify(mapData, null, 2); // Перетворюємо дані в JSON рядок з відступами
 
-            // Створюємо назву файлу з урахуванням ФІО
+         
             const filename = `map-data-${fio.replace(/\s+/g, '_')}.json`;
 
-            // Функція для завантаження JSON
+        
             downloadJSON(dataStr, filename);
         }
     });
 });
 
-// Функція для завантаження JSON файлу з використанням jQuery
+
 function downloadJSON(data, filename) {
     const blob = new Blob([data], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
 
-    // Використовуємо jQuery для створення посилання та симуляції кліку
+
     $('<a>')
         .attr('href', url)
         .attr('download', filename)
