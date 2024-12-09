@@ -1,4 +1,4 @@
-    /* Общая настройка */
+
     body {
         margin: 0;
         display: flex;
@@ -10,14 +10,14 @@
         transition: transform 0.5s ease; 
     }
     
-    /* Разрешаем прокрутку для содержимого */
+   
     #map {
         flex: 1;
         min-height: 100vh; 
         overflow: auto; 
     }
     
-    /* Стили для блока управления */
+ 
     #controls {
         background-color: #f8f9fa;
         padding: 15px;
@@ -356,14 +356,14 @@
         overflow-y: scroll; 
     }
     
-    /* Стили для карты */
+    
     #map {
         width: 98%;
         height: 60vh;
         margin-bottom: 20px; 
     }
     
-    /* Блок управления */
+
     #controls {
         padding: 15px;
         background-color: #f0f0f0;
@@ -400,7 +400,7 @@
         background-color: #0056b3;
     }
     
-    /* Список точек */
+
     #point-list {
         max-height: 250px;
         overflow-y: auto; 
